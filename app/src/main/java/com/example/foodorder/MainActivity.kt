@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var start_bt:Button
     lateinit var reset_tv:TextView
     lateinit var title_tv:TextView
+    lateinit var progress:ProgressBar
     var timer:CountDownTimer? = null
 
     val StartInMili :Long= 25 * 60 * 1000
@@ -41,6 +43,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+
+
+
+
+
     private fun StartTimer() {
         timer = object : CountDownTimer(StartInMili, 10) {
 
@@ -48,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 RemainingTime = left
                 UpdateTimerText()
                 title_tv.setText("Keep Going..")
+                progress.progress = RemainingTime.toDouble().div(StartInMili.toDouble()).times(100).toInt()
             }
 
             override fun onFinish() {
@@ -63,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         start_bt = findViewById(R.id.start_bt)
         reset_tv = findViewById(R.id.reset_bt)
         title_tv = findViewById(R.id.titel_tv)
+        progress = findViewById(R.id.progressBar)
     }
 
     private fun UpdateTimerText(){
@@ -77,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         timer?.cancel()
         title_tv.setText("Take a Promodoro")
         time_tv.setText("25:00")
+        progress.progress = 100
     }
 
 }
